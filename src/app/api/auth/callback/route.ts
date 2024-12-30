@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import { access } from "fs";
 
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);
@@ -26,23 +25,27 @@ export async function GET(req: Request) {
 				},
 			}
 		);
+
 		const { access_token, refresh_token, expires_in } = response.data;
 
-		// Save token in cookies
-		const responseHeaders = new Headers();
-		responseHeaders.append(
-			"Set-Cookie",
-			`spotifyAccessToken=${access_token}; Path=/; HttpOnly; Max-Age=${expires_in}`
-		);
-		responseHeaders.append(
-			"Set-Cookie",
-			`spotifyRefreshToken=${refresh_token}; Path=/; HttpOnly;`
-		);
-
-		console.log("Redirecting to /login");
-		return NextResponse.redirect(
+		const res = NextResponse.redirect(
 			`${process.env.BASE_URL || "http://localhost:3000"}/login`
 		);
+
+		// Set cookies using NextResponse.cookies
+		res.cookies.set("spotifyAccessToken", access_token, {
+			path: "/",
+			httpOnly: true,
+			maxAge: expires_in,
+		});
+
+		res.cookies.set("spotifyRefreshToken", refresh_token, {
+			path: "/",
+			httpOnly: true,
+		});
+
+		console.log("Redirecting to /login");
+		return res;
 	} catch (error: any) {
 		console.log("Error occurred:", error);
 		return NextResponse.json({
