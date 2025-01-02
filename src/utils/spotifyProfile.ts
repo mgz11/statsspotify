@@ -6,11 +6,12 @@ export async function getSpotifyProfile(accessToken: string) {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		});
 		return response.data;
-	} catch (error: any) {
-		console.error(
-			"Error fetching Spotify profile:",
-			error.response?.data || error.message
-		);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.error("Error fetching Spotify profile:", error.message);
+		} else {
+			console.error("Unexpected error:", error);
+		}
 		throw new Error("Failed to fetch Spotify profile");
 	}
 }

@@ -14,11 +14,13 @@ export async function getSpotifyTopItems(
 		);
 
 		return response.data;
-	} catch (error: any) {
-		console.error(
-			"Error fetching user's top items:",
-			error.response?.data || error.message
-		);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.error("Error fetching user's top items:", error.message);
+		} else {
+			console.error("Unexpected error:", error);
+		}
+
 		throw new Error("Failed to fetch user's top items");
 	}
 }

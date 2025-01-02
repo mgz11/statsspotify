@@ -29,7 +29,7 @@ export async function GET(req: Request) {
 		const { access_token, refresh_token, expires_in } = response.data;
 
 		const res = NextResponse.redirect(
-			`${process.env.BASE_URL || "http://localhost:3000"}/login`
+			`${process.env.BASE_URL || "http://localhost:3000"}`
 		);
 
 		// Set cookies using NextResponse.cookies
@@ -43,13 +43,15 @@ export async function GET(req: Request) {
 			path: "/",
 			httpOnly: true,
 		});
-
-		console.log("Redirecting to /login");
 		return res;
-	} catch (error: any) {
-		console.log("Error occurred:", error);
-		return NextResponse.json({
-			error: error.message || "Unknown error occurred",
-		});
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.error("Error fetching profile:", error.message || error);
+			return NextResponse.json({
+				error: error.message || "Unknown error occurred",
+			});
+		} else {
+			console.error("Unexpected error:", error);
+		}
 	}
 }

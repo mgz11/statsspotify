@@ -31,11 +31,15 @@ export async function GET(req: NextRequest) {
 		console.log("Fetched top items:", userTopItems);
 
 		return NextResponse.json(userTopItems);
-	} catch (error: any) {
-		console.error("Error fetching Spotify profile:", error.message || error);
-		return NextResponse.json(
-			{ error: "Failed to fetch Spotify profile" },
-			{ status: 500 }
-		);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.error("Error fetching Spotify profile:", error.message);
+			return NextResponse.json(
+				{ error: "Failed to fetch Spotify profile" },
+				{ status: 500 }
+			);
+		} else {
+			console.error("Unexpected error:", error);
+		}
 	}
 }

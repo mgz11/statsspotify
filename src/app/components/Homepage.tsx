@@ -3,9 +3,23 @@
 import { useState } from "react";
 import TopItems from "./TopItems";
 
-export default function Homepage({ profile }) {
-	const [topItems, setTopItems] = useState<any[]>([]); // State for top tracks/artists
+interface Artist {
+	name: string;
+}
+interface UserTopItems {
+	name: string;
+	artists?: Artist[];
+}
+
+interface HomepageProps {
+	profile: {
+		display_name: string;
+	};
+}
+export default function Homepage({ profile }: HomepageProps) {
+	const [topItems, setTopItems] = useState<UserTopItems[]>([]); // State for top tracks/artists
 	const [loading, setLoading] = useState<boolean>(false);
+	const [searchType, setSearchType] = useState<string>("tracks");
 
 	const fetchTopItems = async (type: string, timeRange: string) => {
 		try {
@@ -19,10 +33,14 @@ export default function Homepage({ profile }) {
 			}
 
 			const data = await response.json();
-			setTopItems(data.items || []); // Assuming the API returns an `items` array
+			setTopItems(data.items || []);
 			console.log("Top items fetched:", data);
-		} catch (err: any) {
-			console.error("Error fetching top items:", err);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				console.error("Error fetching top items:", error.message);
+			} else {
+				console.error("Unexpected error:", error);
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -39,19 +57,29 @@ export default function Homepage({ profile }) {
 				<div className="flex gap-4">
 					<button
 						className="py-2 px-4 rounded bg-blue-500 text-white"
-						onClick={() => fetchTopItems("tracks", "short_term")}
+						onClick={() => {
+							setSearchType("tracks");
+							fetchTopItems("tracks", "short_term");
+						}}
 					>
 						Top Tracks (Short Term)
 					</button>
 					<button
 						className="py-2 px-4 rounded bg-green-500 text-white"
-						onClick={() => fetchTopItems("artists", "short_term")}
+						onClick={() => {
+							setSearchType("artists");
+							fetchTopItems("artists", "short_term");
+						}}
 					>
 						Top Artists (Short Term)
 					</button>
 				</div>
 			</div>
-			{loading ? <p>Loading...</p> : <TopItems items={topItems} />}
+			{loading ? (
+				<p>Loading...</p>
+			) : (
+				<TopItems items={topItems} searchType={searchType} />
+			)}
 		</div>
 	);
 }

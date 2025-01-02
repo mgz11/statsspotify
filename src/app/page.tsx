@@ -26,8 +26,12 @@ export default function App() {
 				const data = await response.json();
 				setProfile(data);
 				console.log("Profile fetched:", data);
-			} catch (err: any) {
-				console.error("Error fetching profile:", err);
+			} catch (error: unknown) {
+				if (error instanceof Error) {
+					console.error("Error fetching profile:", error.message);
+				} else {
+					console.error("Unexpected error:", error);
+				}
 			} finally {
 				setLoading(false);
 			}

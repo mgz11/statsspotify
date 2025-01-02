@@ -28,14 +28,15 @@ export async function GET(req: Request) {
 		);
 
 		return NextResponse.json(response.data);
-	} catch (error: any) {
-		console.error(
-			"Error refreshing token:",
-			error.response?.data || error.message
-		);
-		return NextResponse.json(
-			{ error: "Failed to refresh token" },
-			{ status: 500 }
-		);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.error("Error refreshing token:", error.message);
+			return NextResponse.json(
+				{ error: "Failed to refresh token" },
+				{ status: 500 }
+			);
+		} else {
+			console.error("Unexpected error:", error);
+		}
 	}
 }
