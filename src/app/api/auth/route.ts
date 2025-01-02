@@ -8,7 +8,7 @@ export async function GET() {
 		redirect_uri:
 			process.env.SPOTIFY_REDIRECT_URI ||
 			"http://localhost:3000/api/auth/callback",
-		scope: "user-read-private user-read-email",
+		scope: "user-read-private user-read-email user-top-read",
 	});
 	console.log(
 		"Redirecting to Spotify Auth:",
