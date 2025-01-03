@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TopItems from "./TopItems";
 
 interface Artist {
@@ -20,6 +20,21 @@ export default function Homepage({ profile }: HomepageProps) {
 	const [topItems, setTopItems] = useState<UserTopItems[]>([]); // State for top tracks/artists
 	const [loading, setLoading] = useState<boolean>(false);
 	const [searchType, setSearchType] = useState<string>("tracks");
+	const [activeButton, setActiveButton] = useState<number>(1);
+
+	let time_range = "medium_term";
+	if (activeButton === 0) {
+		time_range = "short_term";
+	} else if (activeButton === 1) {
+		time_range = "medium_term";
+	} else {
+		time_range = "long_term";
+	}
+
+	// Fetch top tracks when component mounts
+	useEffect(() => {
+		fetchTopItems(searchType, time_range);
+	}, []);
 
 	const fetchTopItems = async (type: string, timeRange: string) => {
 		try {
@@ -48,30 +63,68 @@ export default function Homepage({ profile }: HomepageProps) {
 
 	return (
 		<div className="p-8">
-			<h1 className="text-2xl font-bold mb-4">
-				Welcome, {profile.display_name}!
+			<h1 className="text-2xl font-bold mb-4 flex justify-center">
+				Welcome {profile.display_name}!
 			</h1>
 
-			<div className="mb-8">
-				<h2 className="text-xl font-medium mb-2">Fetch Top Items</h2>
-				<div className="flex gap-4">
+			<div className=" flex flex-col items-center mb-8">
+				<div className="flex gap-4 m-4">
 					<button
-						className="py-2 px-4 rounded bg-blue-500 text-white"
+						className={`${
+							searchType === "tracks" ? "bg-blue-500 text-white" : ""
+						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setSearchType("tracks");
-							fetchTopItems("tracks", "short_term");
+							fetchTopItems("tracks", time_range);
 						}}
 					>
-						Top Tracks (Short Term)
+						Top Tracks
 					</button>
 					<button
-						className="py-2 px-4 rounded bg-green-500 text-white"
+						className={`${
+							searchType === "artists" ? "bg-blue-500 text-white" : ""
+						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setSearchType("artists");
-							fetchTopItems("artists", "short_term");
+							fetchTopItems("artists", time_range);
 						}}
 					>
-						Top Artists (Short Term)
+						Top Artists
+					</button>
+				</div>
+				<div className="flex gap-4 mt-4">
+					<button
+						className={`${
+							activeButton === 0 ? "bg-blue-500 text-white" : ""
+						} py-2 px-4 rounded border-black font-medium`}
+						onClick={() => {
+							setActiveButton(0);
+							fetchTopItems(searchType, "short_term");
+						}}
+					>
+						Last 4 Weeks
+					</button>
+					<button
+						className={`${
+							activeButton === 1 ? "bg-blue-500 text-white" : ""
+						} py-2 px-4 rounded border-black font-medium`}
+						onClick={() => {
+							setActiveButton(1);
+							fetchTopItems(searchType, "medium_term");
+						}}
+					>
+						Last 6 Months
+					</button>
+					<button
+						className={`${
+							activeButton === 2 ? "bg-blue-500 text-white" : ""
+						} py-2 px-4 rounded border-black font-medium`}
+						onClick={() => {
+							setActiveButton(2);
+							fetchTopItems(searchType, "long_term");
+						}}
+					>
+						Last Year
 					</button>
 				</div>
 			</div>

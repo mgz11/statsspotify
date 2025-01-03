@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 	// Extract query parameters (type and time_range)
 	const { searchParams } = new URL(req.url);
 	const type = searchParams.get("type") || "tracks"; // Default to "tracks" if not provided
-	const timeRange = searchParams.get("time_range") || "short_term"; // Default to "short_term" if not provided
+	const timeRange = searchParams.get("time_range") || "medium_term"; // Default to "medium_term" if not provided
 
 	try {
 		// Fetch user's top items using the access token, type, and time range
