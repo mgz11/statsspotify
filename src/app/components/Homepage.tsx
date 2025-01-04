@@ -6,9 +6,20 @@ import TopItems from "./TopItems";
 interface Artist {
 	name: string;
 }
+
+interface Image {
+	url: string;
+	height?: number;
+	width?: number;
+}
+
+interface Album {
+	images: Image[];
+}
 interface UserTopItems {
 	name: string;
 	artists?: Artist[];
+	album: Album;
 }
 
 interface HomepageProps {
