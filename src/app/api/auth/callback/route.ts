@@ -9,6 +9,19 @@ export async function GET(req: Request) {
 		return NextResponse.json({ error: "No code provided" }, { status: 400 });
 	}
 
+	const cookies = req.headers.get("cookie") || "";
+	const codeVerifierMatch = cookies.match(/spotify_code_verifier=([^;]+)/);
+	const codeVerifier = codeVerifierMatch
+		? decodeURIComponent(codeVerifierMatch[1])
+		: null;
+
+	if (!codeVerifier) {
+		return NextResponse.json(
+			{ error: "Missing code_verifier. PCKE authentication failed." },
+			{ status: 400 }
+		);
+	}
+
 	try {
 		const response = await axios.post(
 			"https://accounts.spotify.com/api/token",
@@ -17,7 +30,7 @@ export async function GET(req: Request) {
 				redirect_uri: process.env.SPOTIFY_REDIRECT_URI || "",
 				grant_type: "authorization_code",
 				client_id: process.env.SPOTIFY_CLIENT_ID || "",
-				client_secret: process.env.SPOTIFY_CLIENT_SECRET || "",
+				code_verifier: codeVerifier,
 			}),
 			{
 				headers: {
@@ -43,6 +56,14 @@ export async function GET(req: Request) {
 			path: "/",
 			httpOnly: true,
 		});
+
+		// Remove stored verifier (no longer needed after exchange)
+		res.cookies.set("spotify_code_verifier", "", {
+			path: "/",
+			httpOnly: true,
+			maxAge: 0,
+		});
+
 		return res;
 	} catch (error: unknown) {
 		if (error instanceof Error) {
