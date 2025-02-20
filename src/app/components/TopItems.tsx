@@ -58,6 +58,11 @@ export default function TopItems({ items, searchType }: TopItemsProps) {
 									/>
 								)}
 								<p className="mt-2 text-center font-medium">{item.name}</p>
+								{item.artists && searchType === "tracks" && (
+									<p className="text-sm text-gray-600">
+										{item.artists.map((artist) => artist.name).join(", ")}
+									</p>
+								)}
 							</li>
 						);
 					})}

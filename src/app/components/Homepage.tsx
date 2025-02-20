@@ -42,10 +42,10 @@ export default function Homepage({ profile }: HomepageProps) {
 		time_range = "long_term";
 	}
 
-	// Fetch top tracks when component mounts
+	// Fetch top tracks
 	useEffect(() => {
 		fetchTopItems(searchType, time_range);
-	}, []);
+	}, [searchType, time_range]);
 
 	const fetchTopItems = async (type: string, timeRange: string) => {
 		try {
@@ -86,7 +86,7 @@ export default function Homepage({ profile }: HomepageProps) {
 						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setSearchType("tracks");
-							fetchTopItems("tracks", time_range);
+							// fetchTopItems("tracks", time_range);
 						}}
 					>
 						Top Tracks
@@ -97,7 +97,7 @@ export default function Homepage({ profile }: HomepageProps) {
 						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setSearchType("artists");
-							fetchTopItems("artists", time_range);
+							// fetchTopItems("artists", time_range);
 						}}
 					>
 						Top Artists
@@ -110,7 +110,7 @@ export default function Homepage({ profile }: HomepageProps) {
 						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setActiveButton(0);
-							fetchTopItems(searchType, "short_term");
+							// fetchTopItems(searchType, "short_term");
 						}}
 					>
 						Last 4 Weeks
@@ -121,7 +121,7 @@ export default function Homepage({ profile }: HomepageProps) {
 						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setActiveButton(1);
-							fetchTopItems(searchType, "medium_term");
+							// fetchTopItems(searchType, "medium_term");
 						}}
 					>
 						Last 6 Months
@@ -132,7 +132,7 @@ export default function Homepage({ profile }: HomepageProps) {
 						} py-2 px-4 rounded border-black font-medium`}
 						onClick={() => {
 							setActiveButton(2);
-							fetchTopItems(searchType, "long_term");
+							// fetchTopItems(searchType, "long_term");
 						}}
 					>
 						Last Year
