@@ -16,10 +16,15 @@ interface Image {
 interface Album {
 	images: Image[];
 }
+
+interface ExternalUrls {
+	spotify: string;
+}
 interface UserTopItems {
 	name: string;
 	artists?: Artist[];
 	album: Album;
+	external_urls: ExternalUrls;
 }
 
 interface HomepageProps {

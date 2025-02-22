@@ -16,11 +16,16 @@ interface Album {
 	images: ImageType[];
 }
 
+interface ExternalUrls {
+	spotify: string;
+}
+
 interface Item {
 	name: string;
 	artists?: Artist[]; // Optional, as some items might not have artists
 	album?: Album;
 	images?: ImageType[];
+	external_urls: ExternalUrls;
 }
 
 interface TopItemsProps {
@@ -63,6 +68,18 @@ export default function TopItems({ items, searchType }: TopItemsProps) {
 										{item.artists.map((artist) => artist.name).join(", ")}
 									</p>
 								)}
+								<a
+									href={item.external_urls.spotify}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<Image
+										src="/assets/Spotify_Primary_Logo.png"
+										width={35}
+										height={35}
+										alt="Spotify logo that links to song / artist"
+									/>
+								</a>
 							</li>
 						);
 					})}
@@ -93,6 +110,19 @@ export default function TopItems({ items, searchType }: TopItemsProps) {
 										</p>
 									)}
 								</div>
+								<a
+									href={item.external_urls.spotify}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="ml-auto"
+								>
+									<Image
+										src="/assets/Spotify_Primary_Logo.png"
+										width={35}
+										height={35}
+										alt="Spotify logo that links to song / artist"
+									/>
+								</a>
 							</li>
 						);
 					})}
