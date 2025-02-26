@@ -8,12 +8,7 @@ This application allows users to connect their Spotify account and view their to
 
 This application is only in development mode. If the project is cloned, you will need to create a Spotify for Developers account for API authentication and connect the proper redirect URIs in order for the application to work properly.
 
-<![Spotify Top Artists/Tracks Preview](/client/react/public/preview.png)>
-
-## Mockups
-
-I designed a quick mockup for the application in [Figma](https://www.figma.com/file/wzyoW9lC6c01C9OMEzxtaQ/Spotify-User-Display?type=design&node-id=101%3A32&mode=design&t=MmrBDkSJ9P6wNtMB-1) to be able to understand the layout of the website better.
-<![Desktop Mockup](/client/react/public/mockup.png)>
+<![Spotify Top Artists/Tracks Preview](/public/assets/homepage.png)>
 
 ## Features
 
