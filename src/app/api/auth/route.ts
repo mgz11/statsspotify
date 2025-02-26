@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
+/**
+ * Using PCKE Flow from https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow
+ */
 const generateCodeVerifier = (length: number) => {
 	const possible =
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

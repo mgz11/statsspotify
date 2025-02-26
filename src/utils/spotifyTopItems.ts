@@ -5,6 +5,7 @@ export async function getSpotifyTopItems(
 	type: string,
 	time_range: string
 ) {
+	// Limit response to only 10 items
 	const responseLimit = 10;
 	try {
 		// Spotify API endpoint for user's top items

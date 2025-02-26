@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spotify Top Tracks / Artists Viewer
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This application allows users to connect their Spotify account and view their top 10 tracks or artist from different time periods. It provides an easy and interactive way for users to explore their music preferences and discover their most played content on Spotify.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Preview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This application is only in development mode. If the project is cloned, you will need to create a Spotify for Developers account for API authentication and connect the proper redirect URIs in order for the application to work properly.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<![Spotify Top Artists/Tracks Preview](/client/react/public/preview.png)>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Mockups
 
-## Learn More
+I designed a quick mockup for the application in [Figma](https://www.figma.com/file/wzyoW9lC6c01C9OMEzxtaQ/Spotify-User-Display?type=design&node-id=101%3A32&mode=design&t=MmrBDkSJ9P6wNtMB-1) to be able to understand the layout of the website better.
+<![Desktop Mockup](/client/react/public/mockup.png)>
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Spotify Authentication: Spotify accounts are securely connected to the application through the use of Spotify's API and PCKE flow
+- Top Tracks Viewer: Users can view their most streamed tracks for a selected time period
+- Top Artists Viewer: Users can view their most streamed artists for a selected time period
+- Links to Spotify: Each listed artist and track has the link to their page on Spotify
+- User-Friendly Interface: The application provides a simple and user-friendly interface to ensure a smooth experince.
+- Users can select which time period they wish to view. These choices include the past month, last 6 months, and all-time.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Setup and Installation
 
-## Deploy on Vercel
+1. Clone the repository:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/mgz11/statsspotify.git
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Navigate to the project directory:
+
+   ```bash
+   cd statsspotify
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Set up the environment variables:
+
+   - Create a `.env` file in the root directory.
+   - Add the following variables:
+     ```env
+     SPOTIFY_CLIENT_ID="YOUR_SPOTIFY_CLIENT_ID"
+     SPOTIFY_CLIENT_SECRET="YOUR_SPOTIFY_CLIENT_SECRET"
+     SPOTIFY_REDIRECT_URI="http://localhost:3000/api/auth/callback"
+     BASE_URL="http://localhost:3000"
+     ```
+
+5. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## Tools
+
+- [Nextjs](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api)
+- [Axios](https://axios-http.com/docs/intro)

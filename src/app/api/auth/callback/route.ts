@@ -9,6 +9,7 @@ export async function GET(req: Request) {
 		return NextResponse.json({ error: "No code provided" }, { status: 400 });
 	}
 
+	// Check for code verifier
 	const cookies = req.headers.get("cookie") || "";
 	const codeVerifierMatch = cookies.match(/spotify_code_verifier=([^;]+)/);
 	const codeVerifier = codeVerifierMatch

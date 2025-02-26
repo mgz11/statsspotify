@@ -20,6 +20,10 @@ export default function App() {
 				const response = await fetch("/api/spotify/profile");
 
 				if (!response.ok) {
+					if (response.status === 401) {
+						console.log("User is not logged in");
+						return;
+					}
 					throw new Error("Failed to fetch profile");
 				}
 

@@ -47,7 +47,7 @@ export default function Homepage({ profile }: HomepageProps) {
 		time_range = "long_term";
 	}
 
-	// Fetch top tracks
+	// Fetch top tracks / artists
 	useEffect(() => {
 		fetchTopItems(searchType, time_range);
 	}, [searchType, time_range]);
@@ -88,10 +88,9 @@ export default function Homepage({ profile }: HomepageProps) {
 					<button
 						className={`${
 							searchType === "tracks" ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border-black font-medium`}
+						} py-2 px-4 rounded border border-white font-medium`}
 						onClick={() => {
 							setSearchType("tracks");
-							// fetchTopItems("tracks", time_range);
 						}}
 					>
 						Top Tracks
@@ -99,10 +98,9 @@ export default function Homepage({ profile }: HomepageProps) {
 					<button
 						className={`${
 							searchType === "artists" ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border-black font-medium`}
+						} py-2 px-4 rounded border border-white font-medium`}
 						onClick={() => {
 							setSearchType("artists");
-							// fetchTopItems("artists", time_range);
 						}}
 					>
 						Top Artists
@@ -112,10 +110,9 @@ export default function Homepage({ profile }: HomepageProps) {
 					<button
 						className={`${
 							activeButton === 0 ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border-black font-medium`}
+						} py-2 px-4 rounded border border-white font-medium`}
 						onClick={() => {
 							setActiveButton(0);
-							// fetchTopItems(searchType, "short_term");
 						}}
 					>
 						Last 4 Weeks
@@ -123,10 +120,9 @@ export default function Homepage({ profile }: HomepageProps) {
 					<button
 						className={`${
 							activeButton === 1 ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border-black font-medium`}
+						} py-2 px-4 rounded border border-white font-medium`}
 						onClick={() => {
 							setActiveButton(1);
-							// fetchTopItems(searchType, "medium_term");
 						}}
 					>
 						Last 6 Months
@@ -134,10 +130,9 @@ export default function Homepage({ profile }: HomepageProps) {
 					<button
 						className={`${
 							activeButton === 2 ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border-black font-medium`}
+						} py-2 px-4 rounded border border-white font-medium`}
 						onClick={() => {
 							setActiveButton(2);
-							// fetchTopItems(searchType, "long_term");
 						}}
 					>
 						Last Year
