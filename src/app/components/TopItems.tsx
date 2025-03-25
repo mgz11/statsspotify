@@ -57,16 +57,16 @@ export default function TopItems({ items, searchType }: TopItemsProps) {
 							>
 								<div className="flex flex-col items-center">
 									<p className="text-lg font-semibold mb-2">{index + 1}</p>
-									{images[1] && (
+									{images[0] && (
 										<Image
 											src={images[0].url}
 											width={images[0].width || 100}
 											height={images[0].height || 100}
 											alt="Picture of the album/artist"
 											className="rounded shadow"
-											quality={100} // force high quality
-											priority // optional: load early
-											unoptimized // optional: skip Next.js optimization if needed
+											quality={100}
+											priority
+											unoptimized
 										/>
 									)}
 									<p className="mt-2 text-center font-medium">{item.name}</p>
@@ -104,16 +104,16 @@ export default function TopItems({ items, searchType }: TopItemsProps) {
 								<p className="text-lg font-semibold mr-4 w-6 text-center">
 									{index + 4}
 								</p>
-								{images[2] && (
+								{images[0] && (
 									<div className="w-12 md:w-20 h-12 md:h-20 relative shrink-0 rounded shadow overflow-hidden">
 										<Image
 											src={images[0].url}
 											alt="Picture of the album/artist"
 											fill
 											className="object-cover"
-											quality={100} // force high quality
-											priority // optional: load early
-											unoptimized // optional: skip Next.js optimization if needed
+											quality={100}
+											priority
+											unoptimized
 										/>
 									</div>
 								)}
