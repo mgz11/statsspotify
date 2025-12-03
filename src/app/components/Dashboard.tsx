@@ -32,7 +32,7 @@ interface HomepageProps {
 		display_name: string;
 	};
 }
-export default function Homepage({ profile }: HomepageProps) {
+export default function Dashboard({ profile }: HomepageProps) {
 	const [topItems, setTopItems] = useState<UserTopItems[]>([]); // State for top tracks/artists
 	const [loading, setLoading] = useState<boolean>(false);
 	const [searchType, setSearchType] = useState<string>("tracks");
@@ -55,9 +55,7 @@ export default function Homepage({ profile }: HomepageProps) {
 	const fetchTopItems = async (type: string, timeRange: string) => {
 		try {
 			setLoading(true);
-			const response = await fetch(
-				`/api/spotify/userTop?type=${type}&time_range=${timeRange}`
-			);
+			const response = await fetch(`/api/spotify/userTop?type=${type}&time_range=${timeRange}`);
 
 			if (!response.ok) {
 				throw new Error("Failed to fetch top items");
@@ -79,9 +77,7 @@ export default function Homepage({ profile }: HomepageProps) {
 
 	return (
 		<div className="p-8">
-			<h1 className="text-2xl font-bold mb-4 flex justify-center">
-				Welcome {profile.display_name}!
-			</h1>
+			<h1 className="text-2xl font-bold mb-4 flex justify-center">Welcome {profile.display_name}!</h1>
 
 			<div className=" flex flex-col items-center mb-8">
 				<div className="flex gap-4 m-4">
@@ -139,11 +135,7 @@ export default function Homepage({ profile }: HomepageProps) {
 					</button>
 				</div>
 			</div>
-			{loading ? (
-				<p>Loading...</p>
-			) : (
-				<TopItems items={topItems} searchType={searchType} />
-			)}
+			{loading ? <p>Loading...</p> : <TopItems items={topItems} searchType={searchType} />}
 		</div>
 	);
 }

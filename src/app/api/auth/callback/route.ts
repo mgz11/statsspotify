@@ -11,16 +11,12 @@ export async function GET(req: Request) {
 
 	// Check for code verifier
 	const cookies = req.headers.get("cookie") || "";
+	console.log("Cookies received:", cookies);
 	const codeVerifierMatch = cookies.match(/spotify_code_verifier=([^;]+)/);
-	const codeVerifier = codeVerifierMatch
-		? decodeURIComponent(codeVerifierMatch[1])
-		: null;
+	const codeVerifier = codeVerifierMatch ? decodeURIComponent(codeVerifierMatch[1]) : null;
 
 	if (!codeVerifier) {
-		return NextResponse.json(
-			{ error: "Missing code_verifier. PCKE authentication failed." },
-			{ status: 400 }
-		);
+		return NextResponse.json({ error: "Missing code_verifier. PCKE authentication failed." }, { status: 400 });
 	}
 
 	try {
@@ -42,9 +38,7 @@ export async function GET(req: Request) {
 
 		const { access_token, refresh_token, expires_in } = response.data;
 
-		const res = NextResponse.redirect(
-			`${process.env.BASE_URL || "http://localhost:3000"}`
-		);
+		const res = NextResponse.redirect(`${process.env.BASE_URL || "http://127.0.0.1:3000"}`);
 
 		// Set cookies using NextResponse.cookies
 		res.cookies.set("spotifyAccessToken", access_token, {

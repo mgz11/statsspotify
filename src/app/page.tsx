@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import LoginPage from "./components/LoginPage";
-import Homepage from "./components/Homepage";
+import Dashboard from "./components/Dashboard";
 
 interface Profile {
 	display_name: string;
@@ -48,5 +48,5 @@ export default function App() {
 		return <div>Loading...</div>;
 	}
 
-	return profile ? <Homepage profile={profile} /> : <LoginPage />;
+	return profile ? <Dashboard profile={profile} /> : <LoginPage />;
 }
