@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getCache, setCache } from "@/utils/cache";
 import TopItems from "./TopItems";
 
 interface Artist {
@@ -53,8 +54,24 @@ export default function Dashboard({ profile }: HomepageProps) {
 	}, [searchType, time_range]);
 
 	const fetchTopItems = async (type: string, timeRange: string) => {
+		const cacheKey = `spotify-top:${type}:${timeRange}`;
+
+		//24 Hour TTL
+		const ttl = 24 * 60 * 60 * 1000;
+
 		try {
 			setLoading(true);
+
+			const cached = getCache<UserTopItems[]>(cacheKey, ttl);
+			if (cached) {
+				console.log("Using cached top items:", cached);
+				setTopItems(cached);
+				setLoading(false);
+				return;
+			}
+
+			console.log("Cache Miss - Fetching top items from API for type:", type, "and time range:", timeRange);
+
 			const response = await fetch(`/api/spotify/userTop?type=${type}&time_range=${timeRange}`);
 
 			if (!response.ok) {
@@ -62,7 +79,9 @@ export default function Dashboard({ profile }: HomepageProps) {
 			}
 
 			const data = await response.json();
-			setTopItems(data.items || []);
+			const items = data.items || [];
+			setCache(cacheKey, items);
+			setTopItems(items);
 			console.log("Top items fetched:", data);
 		} catch (error: unknown) {
 			if (error instanceof Error) {

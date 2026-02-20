@@ -12,3 +12,24 @@ export interface LastFmSimilarTracksResponse {
 		track: LastFmTrack[];
 	};
 }
+
+export interface SpotifyTrack {
+	id: string;
+	name: string;
+	uri: string;
+
+	artists: {
+		id: string;
+		name: string;
+	}[];
+
+	album: {
+		id: string;
+		name: string;
+		images: {
+			url: string;
+			height: number | null;
+			width: number | null;
+		}[];
+	};
+}
