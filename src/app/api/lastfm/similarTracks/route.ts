@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import { LastFmSimilarTracksResponse } from "@/utils/types";
+import { LastFmSimilarTracksResponse } from "@/lib/lastfm/types";
 
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);

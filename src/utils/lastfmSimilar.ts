@@ -1,5 +1,5 @@
 import { getCache, setCache } from "./cache";
-import { LastFmTrack, LastFmSimilarTracksResponse } from "./types";
+import { LastFmTrack, LastFmSimilarTracksResponse } from "@/lib/lastfm/types";
 
 /**
  * Function to get similar tracks from internal api route with caching

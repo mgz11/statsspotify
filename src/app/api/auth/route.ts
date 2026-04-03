@@ -28,7 +28,9 @@ export async function GET() {
 		client_id: process.env.SPOTIFY_CLIENT_ID || "",
 		response_type: "code",
 		redirect_uri: process.env.SPOTIFY_REDIRECT_URI || "http://127.0.0.1:3000/api/auth/callback",
-		scope: "user-read-private user-read-email user-top-read",
+		scope:
+			"user-read-private user-read-email user-top-read playlist-modify-private playlist-modify-public playlist-read-private",
+		show_dialog: "true",
 		code_challenge: codeChallenge,
 		code_challenge_method: "S256",
 	});

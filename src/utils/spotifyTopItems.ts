@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SpotifyTrack } from "./types";
+import { SpotifyTrack } from "@/lib/spotify/types";
 
 export async function getSpotifyTopItems(
 	accessToken: string,

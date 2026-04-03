@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import LoginPage from "./components/LoginPage";
 import Dashboard from "./components/Dashboard";
-
-interface Profile {
-	display_name: string;
-}
+import { Profile } from "@/lib/spotify/types";
 
 export default function App() {
 	const [profile, setProfile] = useState<Profile | null>(null);

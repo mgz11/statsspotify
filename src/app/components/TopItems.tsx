@@ -1,41 +1,11 @@
 "use client";
 
 import Image from "next/image";
-
-interface Artist {
-	name: string;
-}
-
-interface ImageType {
-	url: string;
-	height?: number;
-	width?: number;
-}
-
-interface Album {
-	images: ImageType[];
-}
-
-interface ExternalUrls {
-	spotify: string;
-}
-
-interface Item {
-	name: string;
-	artists?: Artist[]; // Optional, as some items might not have artists
-	album?: Album;
-	images?: ImageType[];
-	external_urls: ExternalUrls;
-}
-
-interface TopItemsProps {
-	items: Item[];
-	searchType: string;
-}
+import { TopItem, TopItemsProps } from "@/lib/ui/types";
 export default function TopItems({ items, searchType }: TopItemsProps) {
 	if (items.length === 0) return null;
 
-	const getImages = (item: Item) => {
+	const getImages = (item: TopItem) => {
 		return searchType === "tracks" ? item.album?.images || [] : item.images || [];
 	};
 

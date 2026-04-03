@@ -2,37 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { getCache, setCache } from "@/utils/cache";
+import { HomepageProps, UserTopItems } from "@/lib/ui/types";
 import TopItems from "./TopItems";
-
-interface Artist {
-	name: string;
-}
-
-interface Image {
-	url: string;
-	height?: number;
-	width?: number;
-}
-
-interface Album {
-	images: Image[];
-}
-
-interface ExternalUrls {
-	spotify: string;
-}
-interface UserTopItems {
-	name: string;
-	artists?: Artist[];
-	album: Album;
-	external_urls: ExternalUrls;
-}
-
-interface HomepageProps {
-	profile: {
-		display_name: string;
-	};
-}
+import Link from "next/link";
 export default function Dashboard({ profile }: HomepageProps) {
 	const [topItems, setTopItems] = useState<UserTopItems[]>([]); // State for top tracks/artists
 	const [loading, setLoading] = useState<boolean>(false);
@@ -99,6 +71,12 @@ export default function Dashboard({ profile }: HomepageProps) {
 			<h1 className="text-2xl font-bold mb-4 flex justify-center">Welcome {profile.display_name}!</h1>
 
 			<div className=" flex flex-col items-center mb-8">
+				<Link
+					href={{ pathname: "/curate", query: { type: searchType, time_range: time_range } }}
+					className="mb-4 py-2 px-4 rounded border border-white font-medium bg-green-600 hover:bg-green-500 transition-colors"
+				>
+					Generate Playlist
+				</Link>
 				<div className="flex gap-4 m-4">
 					<button
 						className={`${
