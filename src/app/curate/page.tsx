@@ -5,12 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { SeedType, TimeRange } from "@/lib/common/types";
 import { getCache } from "@/utils/cache";
-import {
-	CurateSeed,
-	GeneratePlaylistErrorResponse,
-	GeneratePlaylistResponse,
-	SpotifyTrack,
-} from "@/lib/spotify/types";
+import { CurateSeed, GeneratePlaylistErrorResponse, GeneratePlaylistResponse, SpotifyTrack } from "@/lib/spotify/types";
 
 function isTrackSeed(seed: CurateSeed): seed is SpotifyTrack {
 	return "artists" in seed && "album" in seed;
@@ -96,7 +91,7 @@ export default function CuratePage() {
 			<div className="flex flex-wrap items-center justify-between gap-3 mb-6">
 				<Link
 					href="/"
-					className="inline-block py-2 px-4 rounded border border-white font-medium hover:bg-neutral-800 transition-colors"
+					className="inline-block py-2 px-4 rounded-full border border-white font-medium hover:bg-neutral-800 transition-colors"
 				>
 					Back to Dashboard
 				</Link>
@@ -105,7 +100,7 @@ export default function CuratePage() {
 						href={playlistUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-block py-2 px-4 rounded border border-green-400 text-green-300 font-medium hover:bg-green-900/30 transition-colors"
+						className="inline-block py-2 px-4 rounded-full border border-green-400 text-green-300 font-medium hover:bg-green-900/30 transition-colors"
 					>
 						Open Playlist in Spotify
 					</a>
@@ -137,9 +132,7 @@ export default function CuratePage() {
 					<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 						{seeds.map((seed) => {
 							const imageUrl = isTrackSeed(seed) ? seed.album?.images?.[0]?.url : seed.images?.[0]?.url;
-							const subtitle = isTrackSeed(seed)
-								? seed.artists.map((artist) => artist.name).join(", ")
-								: "Artist seed";
+							const subtitle = isTrackSeed(seed) ? seed.artists.map((artist) => artist.name).join(", ") : "Artist seed";
 
 							return (
 								<div key={seed.id || seed.name} className="rounded-lg border border-neutral-700 p-3 bg-neutral-900/40">
@@ -168,7 +161,7 @@ export default function CuratePage() {
 					<button
 						onClick={generatePlaylist}
 						disabled={loading || seeds.length === 0}
-						className="py-2 px-4 rounded border border-white font-medium disabled:opacity-50 hover:bg-neutral-800 transition-colors"
+						className="py-2 px-4 rounded-full border border-white font-medium disabled:opacity-50 hover:bg-neutral-800 transition-colors"
 					>
 						{loading ? "Generating playlist..." : "Generate Playlist"}
 					</button>
@@ -196,7 +189,9 @@ export default function CuratePage() {
 									)}
 									<div className="min-w-0 flex-1">
 										<p className="text-sm font-medium truncate">{track.name}</p>
-										<p className="text-xs text-gray-400 truncate">{track.artists.map((artist) => artist.name).join(", ")}</p>
+										<p className="text-xs text-gray-400 truncate">
+											{track.artists.map((artist) => artist.name).join(", ")}
+										</p>
 										<p className="text-xs text-gray-500 truncate">{track.album?.name}</p>
 									</div>
 								</div>

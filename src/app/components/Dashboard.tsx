@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getCache, setCache } from "@/utils/cache";
+import { clearCachePrefix, getCache, setCache } from "@/utils/cache";
 import { HomepageProps, UserTopItems } from "@/lib/ui/types";
 import TopItems from "./TopItems";
 import Link from "next/link";
@@ -66,22 +66,38 @@ export default function Dashboard({ profile }: HomepageProps) {
 		}
 	};
 
-	return (
-		<div className="p-8">
-			<h1 className="text-2xl font-bold mb-4 flex justify-center">Welcome {profile.display_name}!</h1>
+	const handleLogout = () => {
+		clearCachePrefix("spotify-top:");
+		window.location.href = "/api/auth/logout";
+	};
 
-			<div className=" flex flex-col items-center mb-8">
+	return (
+		<div className="mx-auto w-full max-w-7xl p-6 md:p-10">
+			<div className="mb-6 flex items-center justify-between gap-4">
+				<h1 className="text-2xl font-bold md:text-3xl">Stats</h1>
+				<h1 className="text-2xl font-bold md:text-3xl">Welcome {profile.display_name}!</h1>
+				<button
+					onClick={handleLogout}
+					className="rounded-full border border-red-200/50 bg-red-500/20 px-4 py-2 text-sm font-semibold text-red-100 transition-colors hover:bg-red-500/35"
+				>
+					Logout
+				</button>
+			</div>
+
+			<div className="mb-10 flex flex-col items-center rounded-2xl border border-white/15 bg-white/5 p-5 shadow-xl backdrop-blur-sm">
 				<Link
 					href={{ pathname: "/curate", query: { type: searchType, time_range: time_range } }}
-					className="mb-4 py-2 px-4 rounded border border-white font-medium bg-green-600 hover:bg-green-500 transition-colors"
+					className="mb-5 rounded-full border border-emerald-200/60 bg-gradient-to-r from-emerald-500 to-green-500 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all hover:-translate-y-0.5 hover:brightness-110"
 				>
 					Generate Playlist
 				</Link>
-				<div className="flex gap-4 m-4">
+				<div className="m-2 flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/15 bg-slate-900/40 p-2">
 					<button
 						className={`${
-							searchType === "tracks" ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border border-white font-medium`}
+							searchType === "tracks"
+								? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-md shadow-cyan-900/40"
+								: "text-slate-200 hover:bg-white/10"
+						} rounded-full px-5 py-2 text-sm font-semibold transition-all`}
 						onClick={() => {
 							setSearchType("tracks");
 						}}
@@ -90,8 +106,10 @@ export default function Dashboard({ profile }: HomepageProps) {
 					</button>
 					<button
 						className={`${
-							searchType === "artists" ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border border-white font-medium`}
+							searchType === "artists"
+								? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-md shadow-cyan-900/40"
+								: "text-slate-200 hover:bg-white/10"
+						} rounded-full px-5 py-2 text-sm font-semibold transition-all`}
 						onClick={() => {
 							setSearchType("artists");
 						}}
@@ -99,11 +117,13 @@ export default function Dashboard({ profile }: HomepageProps) {
 						Top Artists
 					</button>
 				</div>
-				<div className="flex gap-4 mt-4">
+				<div className="mt-4 flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/15 bg-slate-900/40 p-2">
 					<button
 						className={`${
-							activeButton === 0 ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border border-white font-medium`}
+							activeButton === 0
+								? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-md shadow-cyan-900/40"
+								: "text-slate-200 hover:bg-white/10"
+						} rounded-full px-5 py-2 text-sm font-semibold transition-all`}
 						onClick={() => {
 							setActiveButton(0);
 						}}
@@ -112,8 +132,10 @@ export default function Dashboard({ profile }: HomepageProps) {
 					</button>
 					<button
 						className={`${
-							activeButton === 1 ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border border-white font-medium`}
+							activeButton === 1
+								? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-md shadow-cyan-900/40"
+								: "text-slate-200 hover:bg-white/10"
+						} rounded-full px-5 py-2 text-sm font-semibold transition-all`}
 						onClick={() => {
 							setActiveButton(1);
 						}}
@@ -122,8 +144,10 @@ export default function Dashboard({ profile }: HomepageProps) {
 					</button>
 					<button
 						className={`${
-							activeButton === 2 ? "bg-blue-500 text-white" : ""
-						} py-2 px-4 rounded border border-white font-medium`}
+							activeButton === 2
+								? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-md shadow-cyan-900/40"
+								: "text-slate-200 hover:bg-white/10"
+						} rounded-full px-5 py-2 text-sm font-semibold transition-all`}
 						onClick={() => {
 							setActiveButton(2);
 						}}
