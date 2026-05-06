@@ -1,66 +1,91 @@
-# Spotify Top Tracks / Artists Viewer
+# StatsSpotify
 
-## Overview
-
-This application allows users to connect their Spotify account and view their top 10 tracks or artist from different time periods. It provides an easy and interactive way for users to explore their music preferences and discover their most played content on Spotify.
-
-## Preview
-
-This application is only in development mode. If the project is cloned, you will need to create a Spotify for Developers account for API authentication and connect the proper redirect URIs in order for the application to work properly.
-
-<![Spotify Top Artists/Tracks Preview](/public/assets/homepage.png)>
+StatsSpotify is a Next.js app that connects to Spotify and shows your top tracks or artists across multiple time ranges. It also includes a playlist curation flow that uses Last.fm similar-track data to generate a Spotify playlist based on your listening profile.
 
 ## Features
 
-- Spotify Authentication: Spotify accounts are securely connected to the application through the use of Spotify's API and PCKE flow
-- Top Tracks Viewer: Users can view their most streamed tracks for a selected time period
-- Top Artists Viewer: Users can view their most streamed artists for a selected time period
-- Links to Spotify: Each listed artist and track has the link to their page on Spotify
-- User-Friendly Interface: The application provides a simple and user-friendly interface to ensure a smooth experince.
-- Users can select which time period they wish to view. These choices include the past month, last 6 months, and all-time.
+- Spotify OAuth login (PKCE flow)
+- View top tracks or top artists
+- Time-range filters: last 4 weeks, last 6 months, last year
+- Client-side caching for top item requests
+- Playlist curation from your top seeds
+- Spotify playlist creation and one-click open in Spotify
+- Reuses existing generated playlists for the same seed/time-range combination
 
-## Setup and Installation
+## Tech Stack
 
-1. Clone the repository:
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Spotify Web API
+- Last.fm API
+- Axios
 
-   ```bash
-   git clone https://github.com/mgz11/statsspotify.git
-   ```
+## How It Works
 
-2. Navigate to the project directory:
+- You sign in through Spotify OAuth, and tokens are stored in secure HTTP-only cookies.
+- The dashboard fetches your top tracks/artists for the selected time range and caches them for 24 hours.
+- The curate page uses your top 3 seeds from the current dashboard selection.
+- Similar tracks are fetched from Last.fm, matched to Spotify tracks, then added to a new Spotify playlist.
 
-   ```bash
-   cd statsspotify
-   ```
+## Getting Started
 
-3. Install dependencies:
+1. Clone the repository.
 
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/mgz11/statsspotify.git
+cd statsspotify
+```
 
-4. Set up the environment variables:
+2. Install dependencies.
 
-   - Create a `.env` file in the root directory.
-   - Add the following variables:
-     ```env
-     SPOTIFY_CLIENT_ID="YOUR_SPOTIFY_CLIENT_ID"
-     SPOTIFY_CLIENT_SECRET="YOUR_SPOTIFY_CLIENT_SECRET"
-     SPOTIFY_REDIRECT_URI="http://localhost:3000/api/auth/callback"
-     BASE_URL="http://localhost:3000"
-     ```
+```bash
+npm install
+```
 
-5. Start the development server:
+3. Create a `.env` file in the project root.
 
-   ```bash
-   npm run dev
-   ```
+```env
+SPOTIFY_CLIENT_ID="your_spotify_client_id"
+SPOTIFY_CLIENT_SECRET="your_spotify_client_secret"
+SPOTIFY_REDIRECT_URI="http://127.0.0.1:3000/api/auth/callback"
+BASE_URL="http://127.0.0.1:3000"
 
----
+LASTFM_API_KEY="your_lastfm_api_key"
+LASTFM_SHARED_SECRET="your_lastfm_shared_secret"
+```
 
-## Tools
+4. Configure Spotify redirect URI in your Spotify Developer app:
 
-- [Nextjs](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Spotify Web API](https://developer.spotify.com/documentation/web-api)
-- [Axios](https://axios-http.com/docs/intro)
+- `http://127.0.0.1:3000/api/auth/callback`
+
+5. Run the development server.
+
+```bash
+npm run dev
+```
+
+6. Open `http://127.0.0.1:3000`.
+
+## Project Structure
+
+```txt
+src/app/                         # App router pages and API routes
+src/app/api/auth/*               # Spotify auth + token callback/refresh/logout
+src/app/api/spotify/*            # Profile, top items, and playlist generation
+src/app/api/lastfm/*             # Last.fm similar track lookups
+src/app/components/*             # UI components (dashboard, login, top items)
+src/utils/*                      # Spotify and cache utility functions
+```
+
+## Notes
+
+- This project is currently configured for local development.
+- Keep `.env` secrets private and rotate them if they are ever committed.
+
+## Troubleshooting
+
+- `INVALID_CLIENT` or auth redirect issues: verify your Spotify app credentials and redirect URI match exactly.
+- Empty seed message on curate page: open the dashboard first and load top items for the target view/time range.
+- Playlist not created: ensure Spotify account has permission scopes for playlist creation and modification.
